@@ -8,10 +8,19 @@
  * Controller of the timesheetApp
  */
 angular.module('timesheetApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('MainCtrl', function ($scope, moment) {
+
+  $scope.calc = function(){
+    if($scope.startTime && $scope.endTime){
+      var dinnerLength = $scope.dinnerLength || 0;
+      var endDuration = moment.duration($scope.endTime);
+      var startDuration = moment.duration($scope.startTime);
+      var dinnerDuration = moment.duration({minutes: dinnerLength});
+      var workDuration = endDuration.subtract(startDuration).subtract(dinnerDuration);
+      return workDuration.asMilliseconds() <= 0 ? moment.duration() : workDuration;
+    } else {
+      return moment.duration();
+    }
+  };
+
+});
