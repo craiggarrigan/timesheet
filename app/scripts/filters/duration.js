@@ -12,12 +12,12 @@ angular.module('timesheetApp')
   .filter('duration', function () {
 
     // Utility functions
-  	var zeroPad = function(n){
-  		return (n >= 0 && n < 10 ? '0' : '') + n;
-  	};
-  	var trunc = function(n){
-  		return n < 0 ? Math.ceil(n) : Math.floor(n);
-  	};
+    var zeroPad = function(n){
+      return (n >= 0 && n < 10 ? '0' : '') + n;
+    };
+    var trunc = function(n){
+      return n < 0 ? Math.ceil(n) : Math.floor(n);
+    };
 
     // Duration formatting functions
     var formatSign = function(duration){
