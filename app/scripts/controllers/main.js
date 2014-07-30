@@ -23,4 +23,12 @@ angular.module('timesheetApp')
     }
   };
 
+  $scope.total = function(){
+    return $scope.calc();
+  };
+
+  $scope.remaining = function(){
+    return moment.duration({hours: 37}).subtract($scope.total());
+  };
+
 });

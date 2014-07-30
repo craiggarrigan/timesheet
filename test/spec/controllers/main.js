@@ -80,4 +80,19 @@ describe('Controller: MainCtrl', function () {
     expect(scope.calc().minutes()).toBe(0);
   });
 
+  it('should calculate total time worked', function () {
+    scope.startTime = '8:30';
+    scope.endTime = '17:00';
+    expect(scope.total().hours()).toBe(8);
+    expect(scope.total().minutes()).toBe(30);
+  });
+
+  it('should calculate remaining time to work', function () {
+    scope.startTime = '8:30';
+    scope.endTime = '17:00';
+    expect(scope.remaining().days()).toBe(1);
+    expect(scope.remaining().hours()).toBe(4);
+    expect(scope.remaining().minutes()).toBe(30);
+  });
+
 });

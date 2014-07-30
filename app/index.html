@@ -27,7 +27,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
-          Week Beginning 07/07/2014 
+          Week Beginning 28/07/2014
           <div class="pull-right">
             <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-chevron-left"></span></button>
             <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-chevron-right"></span></button>
@@ -53,6 +53,20 @@
               <td><input type="number" min="0" placeholder="30" ng-model="dinnerLength"></td>
               <td><input type="time" ng-model="endTime"></td>
               <td>{{calc() | duration}}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Remaining</td>
+              <td>{{remaining() | duration}}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Total</td>
+              <td>{{total() | duration}}</td>
             </tr>
           </tbody>
         </table>
