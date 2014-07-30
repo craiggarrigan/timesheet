@@ -6,9 +6,10 @@ describe('Filter: duration', function () {
   beforeEach(module('timesheetApp'));
 
   // initialize a new instance of the filter before each test
-  var filter;
-  beforeEach(inject(function ($filter) {
+  var filter, moment;
+  beforeEach(inject(function ($filter, $window) {
     filter = $filter('duration');
+    moment = $window.moment;
   }));
 
   it('should return "0:00" when given null', function () {
