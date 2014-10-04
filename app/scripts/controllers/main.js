@@ -10,25 +10,19 @@
 angular.module('timesheetApp')
   .controller('MainCtrl', function ($scope, moment) {
 
-  $scope.calc = function(){
-    if($scope.startTime && $scope.endTime){
-      var dinnerLength = $scope.dinnerLength || 0;
-      var endDuration = moment.duration($scope.endTime);
-      var startDuration = moment.duration($scope.startTime);
-      var dinnerDuration = moment.duration({minutes: dinnerLength});
-      var workDuration = endDuration.subtract(startDuration).subtract(dinnerDuration);
-      return workDuration.asMilliseconds() <= 0 ? moment.duration() : workDuration;
-    } else {
-      return moment.duration();
-    }
-  };
+  $scope.data = [];
 
   $scope.total = function(){
-    return $scope.calc();
+    var accum = moment.duration();
+    angular.forEach($scope.data, function(value){
+      accum.add(value);
+    });
+    return accum;
   };
 
   $scope.remaining = function(){
-    return moment.duration({hours: 37}).subtract($scope.total());
+    var diff = moment.duration({hours: 37}).subtract($scope.total());
+    return diff <= 0 ? moment.duration() : diff;
   };
 
 });

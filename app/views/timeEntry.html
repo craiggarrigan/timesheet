@@ -1,0 +1,5 @@
+<td>{{ label }}</td>
+<td><input type="time" ng-model="startTime"></td>
+<td><input type="number" min="0" placeholder="30" ng-model="dinnerLength"></td>
+<td><input type="time" ng-model="endTime"></td>
+<td>{{ calculate() | duration }}</td>

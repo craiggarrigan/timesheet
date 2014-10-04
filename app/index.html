@@ -47,13 +47,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Mon</td>
-              <td><input type="time" ng-model="startTime"></td>
-              <td><input type="number" min="0" placeholder="30" ng-model="dinnerLength"></td>
-              <td><input type="time" ng-model="endTime"></td>
-              <td>{{calc() | duration}}</td>
-            </tr>
+            <tr time-entry bind="data[$index]" label="day" ng-repeat="day in ['M','Tu','W','Th','F']"></tr>
             <tr>
               <td></td>
               <td></td>
@@ -100,6 +94,7 @@
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/services/moment.js"></script>
     <script src="scripts/filters/duration.js"></script>
+    <script src="scripts/directives/timeEntry.js"></script>
     <!-- endbuild -->
 </body>
 </html>

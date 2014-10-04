@@ -16,83 +16,64 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should initialise scope with empty start time', function () {
-    expect(scope.startTime).toBeUndefined();
+  it('should initially have an empty data array', function () {
+    expect(scope.data.length).toBe(0);
   });
 
-  it('should initialise scope with empty end time', function () {
-    expect(scope.endTime).toBeUndefined();
+  it('should initially calculate zero total hours worked', function () {
+    expect(scope.total().asHours()).toBe(0);
   });
 
-  it('should initialise scope with empty dinner length', function () {
-    expect(scope.dinnerLength).toBeUndefined();
+  it('should initially calculate 37 total hours remaining', function () {
+    expect(scope.remaining().asHours()).toBe(37);
   });
 
-  it('should initially calculate 0 hours worked', function () {
-    expect(scope.calc().hours()).toBe(0);
-    expect(scope.calc().minutes()).toBe(0);
-  });
-
-  it('should calculate 0 hours worked when only start time is set', function () {
-    scope.startTime = '8:30';
-    expect(scope.calc().hours()).toBe(0);
-    expect(scope.calc().minutes()).toBe(0);
-  });
-
-  it('should calculate 0 hours worked when only end time is set', function () {
-    scope.endTime = '17:00';
-    expect(scope.calc().hours()).toBe(0);
-    expect(scope.calc().minutes()).toBe(0);
-  });
-
-  it('should calculate 0 hours worked when only dinner length is set', function () {
-    scope.dinnerLength = '30';
-    expect(scope.calc().hours()).toBe(0);
-    expect(scope.calc().minutes()).toBe(0);
-  });
-
-  it('should calculate 0 hours worked when only start time and dinner length are set', function () {
-    scope.startTime = '8:30';
-    scope.dinnerLength = '30';
-    expect(scope.calc().hours()).toBe(0);
-    expect(scope.calc().minutes()).toBe(0);
-  });
-
-  it('should calculate 0 hours worked when only end time and dinner length are set', function () {
-    scope.endTime = '17:00';
-    scope.dinnerLength = '30';
-    expect(scope.calc().hours()).toBe(0);
-    expect(scope.calc().minutes()).toBe(0);
-  });
-
-  it('should calculate correct hours worked when no dinner length is set', function () {
-    scope.startTime = '8:30';
-    scope.endTime = '17:00';
-    expect(scope.calc().hours()).toBe(8);
-    expect(scope.calc().minutes()).toBe(30);
-  });
-
-  it('should calculate correct hours worked when dinner length is set', function () {
-    scope.startTime = '8:30';
-    scope.endTime = '17:00';
-    scope.dinnerLength = '30';
-    expect(scope.calc().hours()).toBe(8);
-    expect(scope.calc().minutes()).toBe(0);
-  });
-
-  it('should calculate total time worked', function () {
-    scope.startTime = '8:30';
-    scope.endTime = '17:00';
-    expect(scope.total().hours()).toBe(8);
-    expect(scope.total().minutes()).toBe(30);
-  });
-
-  it('should calculate remaining time to work', function () {
-    scope.startTime = '8:30';
-    scope.endTime = '17:00';
+  it('should calculate remaining time to work > 0 hours', function () {
+    var oneHourInMillis = 1000 * 60 * 60;
+    scope.data = [oneHourInMillis, oneHourInMillis, oneHourInMillis];
     expect(scope.remaining().days()).toBe(1);
-    expect(scope.remaining().hours()).toBe(4);
-    expect(scope.remaining().minutes()).toBe(30);
+    expect(scope.remaining().hours()).toBe(10);
+    expect(scope.remaining().minutes()).toBe(0);
+  });
+
+  it('should calculate total time worked < 37 hours', function () {
+    var oneHourInMillis = 1000 * 60 * 60;
+    scope.data = [oneHourInMillis, oneHourInMillis, oneHourInMillis];
+    expect(scope.total().days()).toBe(0);
+    expect(scope.total().hours()).toBe(3);
+    expect(scope.total().minutes()).toBe(0);
+  });
+
+  it('should calculate remaining time to work = 0 hours', function () {
+    var oneHourInMillis = 1000 * 60 * 60;
+    scope.data = [10 * oneHourInMillis, 10 * oneHourInMillis, 10 * oneHourInMillis, 7 * oneHourInMillis];
+    expect(scope.remaining().days()).toBe(0);
+    expect(scope.remaining().hours()).toBe(0);
+    expect(scope.remaining().minutes()).toBe(0);
+  });
+
+  it('should calculate total time worked = 37 hours', function () {
+    var oneHourInMillis = 1000 * 60 * 60;
+    scope.data = [10 * oneHourInMillis, 10 * oneHourInMillis, 10 * oneHourInMillis, 7 * oneHourInMillis];
+    expect(scope.total().days()).toBe(1);
+    expect(scope.total().hours()).toBe(13);
+    expect(scope.total().minutes()).toBe(0);
+  });
+
+  it('should calculate remaining time to work < 0 hours', function () {
+    var oneHourInMillis = 1000 * 60 * 60;
+    scope.data = [10 * oneHourInMillis, 10 * oneHourInMillis, 10 * oneHourInMillis, 10 * oneHourInMillis];
+    expect(scope.remaining().days()).toBe(0);
+    expect(scope.remaining().hours()).toBe(0);
+    expect(scope.remaining().minutes()).toBe(0);
+  });
+
+  it('should calculate total time worked > 37 hours', function () {
+    var oneHourInMillis = 1000 * 60 * 60;
+    scope.data = [10 * oneHourInMillis, 10 * oneHourInMillis, 10 * oneHourInMillis, 10 * oneHourInMillis];
+    expect(scope.total().days()).toBe(1);
+    expect(scope.total().hours()).toBe(16);
+    expect(scope.total().minutes()).toBe(0);
   });
 
 });
